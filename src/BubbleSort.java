@@ -56,11 +56,37 @@ public class BubbleSort {
         pane = frame1.getContentPane();
         pane.setLayout(null);
 
+        createTextFields();
+
         //Create controls
         btnStart = new JButton("Start");
         btnStep = new JButton("Step");
         btnQuit = new JButton("Quit");
         btnPause = new JButton("Pause");
+
+        //Add all components to panel
+        pane.add(btnStart);
+        pane.add(btnStep);
+        pane.add(btnQuit);
+        pane.add(btnPause);
+
+        //Place and resize all components
+        btnStart.setBounds(10, 10, 80, 30);
+        btnStep.setBounds(10, 50, 80, 30);
+        btnPause.setBounds(10, 90, 80, 30);
+        btnQuit.setBounds(10, 130, 80, 30);
+
+        //Make frame visible
+        frame1.setVisible(true);
+
+        //Add functionality to the buttons
+        btnStart.addActionListener(new BubbleSort.btnStartAction());    //Register action
+        btnStep.addActionListener(new BubbleSort.btnStepAction());      //Register action
+        btnPause.addActionListener(new BubbleSort.btnPauseAction());    //Register action
+        btnQuit.addActionListener(new BubbleSort.btnQuitAction());      //Register action
+    }
+
+    private static void createTextFields(){
 
         //Assign unsorted array values to new text fields
         String u0 = Integer.toString(intArray[0]);
@@ -88,12 +114,6 @@ public class BubbleSort {
         JTextField textField8 = new JTextField(u8, 1);
         JTextField textField9 = new JTextField(u9, 1);
 
-
-        //Add all components to panel
-        pane.add(btnStart);
-        pane.add(btnStep);
-        pane.add(btnQuit);
-        pane.add(btnPause);
         pane.add(unsortedTextField);
         pane.add(sortedTextField);
         pane.add(textField0);
@@ -128,13 +148,6 @@ public class BubbleSort {
         textField7.setBackground(Color.BLACK);
         textField8.setBackground(Color.BLACK);
         textField9.setBackground(Color.BLACK);
-
-        //Place and resize all components
-        btnStart.setBounds(10, 10, 80, 30);
-        btnStep.setBounds(10, 50, 80, 30);
-        btnPause.setBounds(10, 90, 80, 30);
-        btnQuit.setBounds(10, 130, 80, 30);
-
         unsortedTextField.setBounds(100, 10, 80, 20);
         unsortedTextField.setEditable(false);
 
@@ -180,15 +193,6 @@ public class BubbleSort {
         textField9.setBounds(410, 10, 20, 20);
         textField9.setHorizontalAlignment(JTextField.CENTER);
         textField9.setEditable(false);
-
-        //Make frame visible
-        frame1.setVisible(true);
-
-        //Add functionality to the buttons
-        btnStart.addActionListener(new BubbleSort.btnStartAction());    //Register action
-        btnStep.addActionListener(new BubbleSort.btnStepAction());      //Register action
-        btnPause.addActionListener(new BubbleSort.btnPauseAction());    //Register action
-        btnQuit.addActionListener(new BubbleSort.btnQuitAction());      //Register action
     }
 
     private static void updateGUI(){

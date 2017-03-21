@@ -14,7 +14,6 @@ public class InsertionSort {
 
     private static int[] intArray = new int[10];
     private static int a = 1;
-
     private static boolean isRunning = true;
 
     private static JFrame frame1;
@@ -37,7 +36,7 @@ public class InsertionSort {
 
         while (true){
             try {
-                Thread.sleep(100);
+                Thread.sleep(1000);
             } catch(InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
@@ -60,6 +59,31 @@ public class InsertionSort {
         btnQuit = new JButton("Quit");
         btnPause = new JButton("Pause");
 
+        createTextFields();
+
+        //Add all components to panel
+        pane.add(btnStart);
+        pane.add(btnStep);
+        pane.add(btnQuit);
+        pane.add(btnPause);
+
+        //Place and resize all components
+        btnStart.setBounds(10, 10, 80, 30);
+        btnStep.setBounds(10, 50, 80, 30);
+        btnPause.setBounds(10, 90, 80, 30);
+        btnQuit.setBounds(10, 130, 80, 30);
+
+        //Make frame visible
+        frame1.setVisible(true);
+
+        //Add functionality to the buttons
+        btnStart.addActionListener(new InsertionSort.btnStartAction());    //Register action
+        btnStep.addActionListener(new InsertionSort.btnStepAction());      //Register action
+        btnPause.addActionListener(new InsertionSort.btnPauseAction());    //Register action
+        btnQuit.addActionListener(new InsertionSort.btnQuitAction());      //Register action
+    }
+
+    private static void createTextFields(){
         //Assign unsorted array values to new text fields
         String u0 = Integer.toString(intArray[0]);
         String u1 = Integer.toString(intArray[1]);
@@ -86,12 +110,6 @@ public class InsertionSort {
         JTextField textField8 = new JTextField(u8, 1);
         JTextField textField9 = new JTextField(u9, 1);
 
-
-        //Add all components to panel
-        pane.add(btnStart);
-        pane.add(btnStep);
-        pane.add(btnQuit);
-        pane.add(btnPause);
         pane.add(unsortedTextField);
         pane.add(sortedTextField);
         pane.add(textField0);
@@ -126,13 +144,6 @@ public class InsertionSort {
         textField7.setBackground(Color.BLACK);
         textField8.setBackground(Color.BLACK);
         textField9.setBackground(Color.BLACK);
-
-        //Place and resize all components
-        btnStart.setBounds(10, 10, 80, 30);
-        btnStep.setBounds(10, 50, 80, 30);
-        btnPause.setBounds(10, 90, 80, 30);
-        btnQuit.setBounds(10, 130, 80, 30);
-
         unsortedTextField.setBounds(100, 10, 80, 20);
         unsortedTextField.setEditable(false);
 
@@ -178,15 +189,6 @@ public class InsertionSort {
         textField9.setBounds(410, 10, 20, 20);
         textField9.setHorizontalAlignment(JTextField.CENTER);
         textField9.setEditable(false);
-
-        //Make frame visible
-        frame1.setVisible(true);
-
-        //Add functionality to the buttons
-        btnStart.addActionListener(new InsertionSort.btnStartAction());    //Register action
-        btnStep.addActionListener(new InsertionSort.btnStepAction());      //Register action
-        btnPause.addActionListener(new InsertionSort.btnPauseAction());    //Register action
-        btnQuit.addActionListener(new InsertionSort.btnQuitAction());      //Register action
     }
 
     private static void updateGUI(){
@@ -418,7 +420,6 @@ public class InsertionSort {
 
     private static void insertionSort(int[] intArray) {
         //The function that actually sorts the values of the array (one iteration)
-
         int j = a;              // the number of items sorted so far
         int key;                // the item to be inserted
         int i;
