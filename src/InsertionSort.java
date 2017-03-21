@@ -50,6 +50,8 @@ public class InsertionSort {
         //Create the frame
         frame1 = new JFrame("Inserstion Sort");
         frame1.setSize(450, 230);
+        frame1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         pane = frame1.getContentPane();
         pane.setLayout(null);
 

@@ -53,6 +53,8 @@ public class BubbleSort {
         //Create the frame
         frame1 = new JFrame("Bubble Sort");
         frame1.setSize(450, 230);
+        frame1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         pane = frame1.getContentPane();
         pane.setLayout(null);
 

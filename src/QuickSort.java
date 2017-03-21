@@ -13,16 +13,12 @@ public class QuickSort {
 
     private static int[] intArray = new int[10];
     private static int a = 1;
-    private static boolean isRunning = true;
 
     private static JFrame frame1;
     private static Container pane;
-    private static JButton btnStart, btnStep, btnQuit, btnPause;
+    private static JButton btnSort, btnQuit;
 
     public static void main(String[] args) {
-
-        isRunning = false;
-
         //Fill our array with random values between 1 and 50
         Random rand = new Random();
         for (int i = 0; i < intArray.length; i++) {
@@ -32,53 +28,39 @@ public class QuickSort {
         //Create Graphical User Interface
         createGUI();
         updateGUI();
-
-        while (true){
-            try {
-                Thread.sleep(1000);
-            } catch(InterruptedException ex) {
-                Thread.currentThread().interrupt();
-            }
-
-            checkStatus();
-        }
     }
 
     private static void createGUI(){
 
         //Create the frame
-        frame1 = new JFrame("Inserstion Sort");
-        frame1.setSize(450, 230);
+        frame1 = new JFrame("Insertion Sort");
+        frame1.setSize(460, 130);
+        frame1.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         pane = frame1.getContentPane();
         pane.setLayout(null);
 
         //Create controls
-        btnStart = new JButton("Start");
-        btnStep = new JButton("Step");
+        btnSort = new JButton("Sort");
         btnQuit = new JButton("Quit");
-        btnPause = new JButton("Pause");
 
         createTextFields();
 
         //Add all components to panel
-        pane.add(btnStart);
-        pane.add(btnStep);
+        pane.add(btnSort);
         pane.add(btnQuit);
-        pane.add(btnPause);
 
         //Place and resize all components
-        btnStart.setBounds(10, 10, 80, 30);
-        btnStep.setBounds(10, 50, 80, 30);
-        btnPause.setBounds(10, 90, 80, 30);
-        btnQuit.setBounds(10, 130, 80, 30);
+        btnSort.setBounds(10, 10, 80, 30);
+
+        btnQuit.setBounds(10, 50, 80, 30);
 
         //Make frame visible
         frame1.setVisible(true);
 
         //Add functionality to the buttons
-        btnStart.addActionListener(new QuickSort.btnStartAction());    //Register action
-        btnStep.addActionListener(new QuickSort.btnStepAction());      //Register action
-        btnPause.addActionListener(new QuickSort.btnPauseAction());    //Register action
+        btnSort.addActionListener(new btnSortAction());    //Register action
+
         btnQuit.addActionListener(new QuickSort.btnQuitAction());      //Register action
     }
 
@@ -192,8 +174,6 @@ public class QuickSort {
 
     private static void updateGUI(){
 
-        String swapamount = Integer.toString(QuickSort.a-1);
-        String stepamount = Integer.toString(QuickSort.a-1);
         String s0 = Integer.toString(intArray[0]);
         String s1 = Integer.toString(intArray[1]);
         String s2 = Integer.toString(intArray[2]);
@@ -205,8 +185,6 @@ public class QuickSort {
         String s8 = Integer.toString(intArray[8]);
         String s9 = Integer.toString(intArray[9]);
 
-        JTextField swapamountTextField = new JTextField("Swaps: " + swapamount, 1);
-        JTextField stepamountTextField = new JTextField("Steps: " + stepamount, 1);
         JTextField textFields0 = new JTextField(s0, 1);
         JTextField textFields1 = new JTextField(s1, 1);
         JTextField textFields2 = new JTextField(s2, 1);
@@ -218,8 +196,6 @@ public class QuickSort {
         JTextField textFields8 = new JTextField(s8, 1);
         JTextField textFields9 = new JTextField(s9, 1);
 
-        pane.add(swapamountTextField);
-        pane.add(stepamountTextField);
         pane.add(textFields0);
         pane.add(textFields1);
         pane.add(textFields2);
@@ -252,12 +228,6 @@ public class QuickSort {
         textFields7.setBackground(Color.BLACK);
         textFields8.setBackground(Color.BLACK);
         textFields9.setBackground(Color.BLACK);
-
-        swapamountTextField.setEditable(false);
-        swapamountTextField.setBounds(100, 90, 80, 20);
-
-        stepamountTextField.setEditable(false);
-        stepamountTextField.setBounds(100, 130, 80, 20);
 
         textFields0.setEditable(false);
         textFields0.setBounds(185, 50, 20, 20);
@@ -302,8 +272,6 @@ public class QuickSort {
 
     private static void finalGUI(){
 
-        String swapamount = Integer.toString(QuickSort.a-1);
-        String stepamount = Integer.toString(QuickSort.a-1);
         String s0 = Integer.toString(intArray[0]);
         String s1 = Integer.toString(intArray[1]);
         String s2 = Integer.toString(intArray[2]);
@@ -315,8 +283,6 @@ public class QuickSort {
         String s8 = Integer.toString(intArray[8]);
         String s9 = Integer.toString(intArray[9]);
 
-        JTextField swapamountTextField = new JTextField("Swaps: " + swapamount, 1);
-        JTextField stepamountTextField = new JTextField("Steps: " + stepamount, 1);
         JTextField textFields0 = new JTextField(s0, 1);
         JTextField textFields1 = new JTextField(s1, 1);
         JTextField textFields2 = new JTextField(s2, 1);
@@ -328,8 +294,6 @@ public class QuickSort {
         JTextField textFields8 = new JTextField(s8, 1);
         JTextField textFields9 = new JTextField(s9, 1);
 
-        pane.add(swapamountTextField);
-        pane.add(stepamountTextField);
         pane.add(textFields0);
         pane.add(textFields1);
         pane.add(textFields2);
@@ -362,12 +326,6 @@ public class QuickSort {
         textFields7.setBackground(Color.BLACK);
         textFields8.setBackground(Color.BLACK);
         textFields9.setBackground(Color.BLACK);
-
-        swapamountTextField.setEditable(false);
-        swapamountTextField.setBounds(100, 90, 80, 20);
-
-        stepamountTextField.setEditable(false);
-        stepamountTextField.setBounds(100, 130, 80, 20);
 
         textFields0.setEditable(false);
         textFields0.setBounds(185, 50, 20, 20);
@@ -410,61 +368,63 @@ public class QuickSort {
         textFields9.setHorizontalAlignment(JTextField.CENTER);
     }
 
-    private static void checkStatus(){
-        //This function checks whether the program should be running or paused
-        if(isRunning){
-            insertionSort(intArray);
-        }
-    }
+    public static void quickSort(int array[], int start, int end)
+    {
+        int i = start;                          // index of left-to-right scan
+        int k = end;                            // index of right-to-left scan
 
-    private static void insertionSort(int[] intArray) {
-        //The function that actually sorts the values of the array (one iteration)
-        int j = a;              // the number of items sorted so far
-        int key;                // the item to be inserted
-        int i;
+        if (end - start >= 1)                   // check that there are at least two elements to sort
+        {
+            int pivot = array[start];       // set the pivot as the first element in the partition
 
-        if(j < intArray.length){
-
-            key = intArray[j];
-
-            for(i = j - 1; (i >= 0) && (intArray[i] > key); i--)   // Smaller values are moving up
+            while (k > i)                   // while the scan indices from left and right have not met,
             {
-                intArray[ i+1 ] = intArray[ i ];
+                while (array[i] <= pivot && i <= end && k > i)  // from the left, look for the first
+                    i++;                                    // element greater than the pivot
+                while (array[k] > pivot && k >= start && k >= i) // from the right, look for the first
+                    k--;                                        // element not greater than the pivot
+                if (k > i)                                       // if the left seekindex is still smaller than
+                    swap(array, i, k);                      // the right index, swap the corresponding elements
             }
-            intArray[ i+1 ] = key;    // Put the key in its proper location
+
+            swap(array, start, k);          // after the indices have crossed, swap the last element in
+            // the left partition with the pivot
+            quickSort(array, start, k - 1); // quicksort the left partition
+            quickSort(array, k + 1, end);   // quicksort the right partition
+        }
+        else    // if there is only one element in the partition, do not do any sorting
+        {
+            return;                  // the array is sorted, so exit
         }
 
-        if(a <= 9){
-            a++;
+    }
+
+    private static void swap(int array[], int index1, int index2){
+    // pre: array is full and index1, index2 < array.length
+    // post: the values at indices 1 and 2 have been swapped
+
+        int temp = array[index1];           // store the first value in a temp
+        array[index1] = array[index2];      // copy the value of the second into the first
+        array[index2] = temp;               // copy the value of the temp into the second
+    }
+
+    public static class btnSortAction implements ActionListener{
+        public void actionPerformed (ActionEvent e) {
+            quickSort(intArray, 0, intArray.length-1);
             updateGUI();
-        }
 
-        if(a > 9){
+            try {
+                Thread.sleep(500);
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+
             finalGUI();
+
         }
     }
 
-    public static class btnStartAction implements ActionListener{
-        public void actionPerformed (ActionEvent e) {
-            isRunning = true;
-            checkStatus();
-        }
-    }
 
-    public static class btnStepAction implements ActionListener{
-        public void actionPerformed (ActionEvent e) {
-            insertionSort(intArray);
-            isRunning = false;
-            checkStatus();
-        }
-    }
-
-    public static class btnPauseAction implements ActionListener{
-        public void actionPerformed (ActionEvent e){
-            isRunning = false;
-            checkStatus();
-        }
-    }
 
     public static class btnQuitAction implements ActionListener{
         public void actionPerformed (ActionEvent e){
